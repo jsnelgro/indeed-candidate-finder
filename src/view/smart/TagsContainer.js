@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { tags, selectedTags, selectedTagCount } from '../../state/selectors'
 import { addSelectedTag, removeSelectedTag, clearSelectedTags } from '../../state/actions'
+import TagsContainerView from '../dumb/TagsContainerView'
 
 const mapStateToProps = (state, ownProps) => ({
   tags: tags(state),
@@ -15,10 +16,4 @@ const mapDispatchToProps = {
   clearSelectedTags,
 }
 
-class TagsContainer extends Component {
-  render() {
-    return <div>{JSON.stringify(this.props)}</div>
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(TagsContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(TagsContainerView)
