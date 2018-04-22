@@ -1,8 +1,8 @@
-# My App
+# Indeed Sample App
 
 ## Description
 
-My cool app!
+A sample app for indeed.com. Allows searching for users based on skill tags.
 
 ## Setup
 
