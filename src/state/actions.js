@@ -13,10 +13,6 @@ export const ADD_SELECTED_TAG = 'ADD_SELECTED_TAG'
 export const REMOVE_SELECTED_TAG = 'REMOVE_SELECTED_TAG'
 export const CLEAR_SELECTED_TAGS = 'CLEAR_SELECTED_TAGS'
 
-const int = (num = 0) => {
-  return num | 0
-}
-
 // async actions
 
 export function initApp() {
