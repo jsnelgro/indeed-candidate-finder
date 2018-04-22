@@ -14,7 +14,10 @@ import {
 //////////// helper reducers ////////////
 
 function asyncReducer(reducer) {
-  return (state = { status: 'UNATTEMPTED', data: reducer(undefined, noop()) }, action) => {
+  return (
+    state = { status: 'UNATTEMPTED', data: reducer(undefined, noop()) },
+    action
+  ) => {
     switch (action.type) {
       case SET_ASYNC_REQUEST_STATUS:
         return { status: action.val, data: state.data }
@@ -42,7 +45,14 @@ function hashReducer(state = {}, action) {
 }
 
 const proxy = (proxyMap = {}) => (reducer) => (state, action) => {
-  return reducer(state, { ...action, type: proxyMap[action.type] })
+  return reducer(state, { ...action, type: proxyMap[action.type] || action.type })
+}
+
+const xtend = (actionMap = {}) => (reducer) => (state, action) => {
+  if (typeof actionMap[action.type] === 'function') {
+    return actionMap[action.type](state, action)
+  }
+  return reducer(state, action)
 }
 
 //////////// app-level reducers ////////////
@@ -50,7 +60,19 @@ const proxy = (proxyMap = {}) => (reducer) => (state, action) => {
 export const tags = proxy({
   [SET_TAGS_REQUEST_STATUS]: SET_ASYNC_REQUEST_STATUS,
   [SET_TAGS]: 'SET',
-})(asyncReducer(hashReducer))
+})(
+  asyncReducer(
+    xtend({
+      [ADD_SELECTED_TAG]: (state, action) => ({ ...state, [action.val]: true }),
+      [REMOVE_SELECTED_TAG]: (state, action) => ({ ...state, [action.val]: false }),
+      [CLEAR_SELECTED_TAGS]: (state, action) => {
+        return Object.keys(state).reduce((acc, key) => {
+          return { ...acc, [key]: false }
+        }, {})
+      },
+    })(hashReducer)
+  )
+)
 
 export const selectedTags = proxy({
   [ADD_SELECTED_TAG]: 'INSERT',

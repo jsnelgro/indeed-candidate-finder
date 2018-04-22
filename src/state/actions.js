@@ -28,7 +28,7 @@ export function loadTags() {
     try {
       const REQ_URL = 'http://api.dataatwork.org/v1/jobs/unusual_titles?offset=20&limit=200'
       let res = await fetch(REQ_URL).then((r) => r.json())
-      dispatch(setTags(res.reduce((acc, job) => ({ ...acc, [job.title]: true }), {})))
+      dispatch(setTags(res.reduce((acc, job) => ({ ...acc, [job.title]: false }), {})))
       dispatch(setTagsRequestStatus('SUCCESS'))
     } catch (e) {
       dispatch(setTagsRequestStatus(e.message))
