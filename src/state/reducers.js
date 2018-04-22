@@ -44,6 +44,23 @@ function hashReducer(state = {}, action) {
   }
 }
 
+function listReducer(state = [], action) {
+  switch (action.type) {
+    case 'SET':
+      return [...action.val]
+    case 'PUSH':
+      return [...state, action.val]
+    case 'DELETE':
+      return state.filter((v) => v !== action.val)
+    case 'DELETE_AT_INDEX':
+      return [...state.slice(0, action.val), ...state.slice(action.val + 1)]
+    case 'EMPTY':
+      return []
+    default:
+      return state
+  }
+}
+
 const proxy = (proxyMap = {}) => (reducer) => (state, action) => {
   return reducer(state, { ...action, type: proxyMap[action.type] || action.type })
 }
@@ -74,20 +91,13 @@ export const tags = proxy({
   )
 )
 
-export const selectedTags = proxy({
-  [ADD_SELECTED_TAG]: 'INSERT',
-  [REMOVE_SELECTED_TAG]: 'DELETE',
-  [CLEAR_SELECTED_TAGS]: 'EMPTY',
-})(hashReducer)
-
 export const applicants = proxy({
   [SET_APPLICANTS_REQUEST_STATUS]: SET_ASYNC_REQUEST_STATUS,
   [SET_APPLICANTS]: 'SET',
-})(asyncReducer(hashReducer))
+})(asyncReducer(listReducer))
 
 export const rootReducer = combineReducers({
   tags,
-  selectedTags,
   applicants,
 })
 export default rootReducer

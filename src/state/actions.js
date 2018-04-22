@@ -26,7 +26,8 @@ export function loadTags() {
   return async (dispatch) => {
     dispatch(setTagsRequestStatus('LOADING'))
     try {
-      const REQ_URL = 'http://api.dataatwork.org/v1/jobs/unusual_titles?offset=20&limit=200'
+      const REQ_URL =
+        'http://api.dataatwork.org/v1/jobs/unusual_titles?offset=20&limit=200'
       let res = await fetch(REQ_URL).then((r) => r.json())
       dispatch(setTags(res.reduce((acc, job) => ({ ...acc, [job.title]: false }), {})))
       dispatch(setTagsRequestStatus('SUCCESS'))
@@ -45,16 +46,10 @@ export function loadApplicants() {
       let res = await fetch(REQ_URL).then((r) => r.json())
 
       // roll up results array into a hash and add some random tags
-      res = res.results.reduce(
-        (acc, u) => ({
-          ...acc,
-          [u.email]: {
-            ...u,
-            tags: sampleSize(Object.keys(getTags(state)), ~~(Math.random() * 10)),
-          },
-        }),
-        {}
-      )
+      res = res.results.map((applicant) => ({
+        ...applicant,
+        tags: sampleSize(Object.keys(getTags(state)), ~~(Math.random() * 10)),
+      }))
       dispatch(setApplicants(res))
       dispatch(setApplicantsRequestStatus('SUCCESS'))
     } catch (e) {
