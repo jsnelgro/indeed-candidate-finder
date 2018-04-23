@@ -55,3 +55,116 @@ export const centerContents = css`
   justify-content: center;
   align-items: center;
 `
+
+///////////////////////////
+/** abandoned components */
+///////////////////////////
+
+// {
+//   /* <ForceSimulation
+//   height={250}
+//   width={window.innerWidth}
+//   addSelectedTag={addSelectedTag}
+//   removeSelectedTag={removeSelectedTag}
+//   nodes={Object.keys(tags).map((name) => ({
+//     name,
+//     selected: tags[name],
+//     radius: 25,
+//   }))}
+// /> */
+// }
+
+// const Canvas = styled.div`
+//   height: 100%;
+//   width: 100%;
+// `
+
+// const SVGTagStyled = styled.g`
+//   & > circle {
+//     fill: ${(p) => (p.selected ? '#1497ff' : '#085ff7')};
+//   }
+
+//   & > text {
+//     fill: white;
+//   }
+// `
+
+// const SVGTag = ({ selected, name, removeSelectedTag, addSelectedTag, x, y, radius }) => {
+//   return (
+//     <SVGTagStyled {...{ selected }} transform={`translate(${x}, ${y})`}>
+//       <circle
+//         onClick={() => (selected ? removeSelectedTag(name) : addSelectedTag(name))}
+//         r={radius}
+//         cx={0}
+//         cy={0}
+//       />
+//       // height={radius}
+//       // width={radius * 3}
+//       // x={0}
+//       // y={0}
+//       <text x={0} y={0} textAnchor="middle">
+//         {name}
+//       </text>
+//     </SVGTagStyled>
+//   )
+// }
+
+// class ForceSimulation extends Component {
+//   static defaultProps = {
+//     height: 400,
+//     width: 400,
+//     nodes: [],
+//   }
+//   constructor(props) {
+//     super()
+//     this.state = { nodes: [], isMounted: false }
+//   }
+
+//   componentDidMount() {
+//     let { height, width, nodes } = this.props
+//     this.simulation = forceSimulation(nodes)
+//       .force('charge', forceManyBody().strength(-5))
+//       .force('center', forceCenter(width / 2, height / 2))
+//       .force(
+//         'collision',
+//         forceCollide().radius(function(d) {
+//           return d.radius
+//         })
+//       )
+//       .on('tick', throttle(this.ticked, 1000))
+//     this.setState({ isMounted: true })
+//   }
+
+//   componentWillUnmount() {
+//     this.setState({ isMounted: false })
+//   }
+
+//   componentWillReceiveProps(nxtProps) {
+//     let simNodes = this.simulation.nodes()
+//     this.simulation.nodes(
+//       nxtProps.nodes.map((node, i) => {
+//         let existingNode = simNodes[i] || {}
+//         return { ...existingNode, ...node }
+//       })
+//     )
+//   }
+
+//   ticked = () => {
+//     console.log('tick')
+//     if (this.state.isMounted) {
+//       this.setState({ nodes: this.simulation.nodes() })
+//     }
+//   }
+
+//   render() {
+//     const { height, width, addSelectedTag, removeSelectedTag } = this.props
+//     const { nodes } = this.state
+//     return (
+//       <Canvas>
+//         {nodes.map((d) => {
+//           return <Tag {...{ ...d, key: d.index, addSelectedTag, removeSelectedTag }} />
+//         })}
+//       </Canvas>
+//     )
+//   }
+// }
