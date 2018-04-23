@@ -25,10 +25,12 @@ export const borderRadius = css`
 `
 
 export const horizontalScroll = css`
+  -webkit-overflow-scrolling: touch;
   overflow-x: scroll;
 `
 
 export const verticalScroll = css`
+  -webkit-overflow-scrolling: touch;
   overflow-y: scroll;
 `
 
