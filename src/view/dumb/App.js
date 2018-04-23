@@ -30,10 +30,10 @@ const AppLayout = styled.div`
   overflow: hidden;
   width: 100%;
   & > div:first-child {
-    height: 33%;
+    height: 45%;
   }
   & > div:nth-child(2) {
-    height: calc(100% - 33%);
+    height: calc(100% - 45%);
     margin-top: 12px;
   }
 `
