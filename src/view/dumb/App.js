@@ -4,7 +4,24 @@ import reset from 'styled-reset'
 
 export const baseStyles = () => injectGlobal`
   ${reset}
-  /* other global styles */
+  *, *:before, *:after {
+    box-sizing: border-box;
+  }
+
+  html {
+    background: #efefef;
+  }
+
+  /* global styles */
+  h1, h2, h3, h4, p, a, div, span, button {
+    font-family: helvetica;
+    color: #4c4c4c;
+    font-size: 15px;
+  }
+
+  h1 {
+    font-size: 21px;
+  }
 `
 
 const AppLayout = styled.div`
@@ -17,6 +34,7 @@ const AppLayout = styled.div`
   }
   & > div:nth-child(2) {
     height: calc(100% - 33%);
+    margin-top: 12px;
   }
 `
 

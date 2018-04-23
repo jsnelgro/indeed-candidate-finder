@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { Col, Row, raised, borderRadius, verticalScroll } from './common/'
+import { Col, Chip, Row, raised, flexWrap, borderRadius, verticalScroll } from './common/'
 import upperfirst from 'lodash.upperfirst'
 
 const capitalize = (name) => {
@@ -14,6 +14,7 @@ const ListContainer = styled.div`
   ${verticalScroll};
   display: flex;
   flex-direction: column;
+  align-items: center;
   padding: 5px 20px 20px 20px;
   background-color: #efefef;
 `
@@ -59,20 +60,8 @@ const Card = styled.div`
   & > div:last-child {
     background-color: #f7f7f7;
     padding: 15px 15px 5px 15px;
-    flex-direction: row;
-    flex-wrap: wrap;
-    display: flex;
+    ${flexWrap};
   }
-`
-
-const Chip = styled.div`
-  box-shadow: 3px 3px 7px 0px hsla(218, 97%, 41%, 0.65);
-  ${borderRadius};
-  background-color: #085ff7;
-  color: white;
-  padding: 15px;
-  margin: 0 10px 10px 0;
-  font-size: 13px;
 `
 
 const ApplicantListContainerView = ({ applicants }) => {
