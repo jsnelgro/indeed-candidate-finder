@@ -1,17 +1,24 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { Fit } from 'reas'
-import { Col, Row, raised, borderRadius, horizontalScroll } from './common/'
+import {
+  Col,
+  Row,
+  raised,
+  borderRadius,
+  horizontalScroll,
+  verticalScroll,
+} from './common/'
 import { simplexMap, normalize } from 'jhs-utils'
+import { forceSimulation, forceManyBody, forceCenter, forceCollide } from 'd3-force'
 const noise = simplexMap('42')
 
 const TagsContainer = styled.div`
   ${raised};
   ${horizontalScroll};
   background: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%);
-  overflow-x: scroll;
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-flow: row wrap;
 `
 
@@ -33,17 +40,10 @@ const Tag = styled.div`
 
 const ClearTagsBtn = styled.button``
 
-const TagsContainerView = ({
-  tags,
-  selectedTags,
-  selectedTagCount,
-  addSelectedTag, // fn
-  removeSelectedTag, // fn
-  clearSelectedTags, // fn
-}) => {
+const TagsGrid = () => {
   return (
-    <TagsContainer>
-      {/* <ClearTagsBtn onClick={clearSelectedTags}>{selectedTagCount}</ClearTagsBtn> */}
+    <div>
+      <ClearTagsBtn onClick={clearSelectedTags}>{selectedTagCount}</ClearTagsBtn>
       {Object.keys(tags).map((k, i) => {
         return (
           <Tag
@@ -57,6 +57,110 @@ const TagsContainerView = ({
           </Tag>
         )
       })}
+    </div>
+  )
+}
+
+const SVGTag = ({ selected, name, removeSelectedTag, addSelectedTag, x, y, radius }) => {
+  return (
+    <g transform={`translate(${x}, ${y})`}>
+      <circle
+        onClick={() => (selected ? removeSelectedTag(name) : addSelectedTag(name))}
+        fill={selected ? '#478aef' : 'white'}
+        r={radius}
+        cx={0}
+        cy={0}
+      />
+      <text>{name}</text>
+    </g>
+  )
+}
+
+const Canvas = styled.svg`
+  height: 100%;
+  width: 100%;
+`
+
+class ForceSimulation extends Component {
+  static defaultProps = {
+    height: 400,
+    width: 400,
+    nodes: [],
+  }
+  constructor(props) {
+    super()
+    this.state = { nodes: [], isMounted: false }
+  }
+
+  componentDidMount() {
+    let { height, width, nodes } = this.props
+    this.simulation = forceSimulation(nodes)
+      .force('charge', forceManyBody().strength(5))
+      .force('center', forceCenter(width / 2, height / 2))
+      .force(
+        'collision',
+        forceCollide().radius(function(d) {
+          return d.radius
+        })
+      )
+      .on('tick', this.ticked)
+    this.setState({ isMounted: true })
+  }
+
+  componentWillUnmount() {
+    this.setState({ isMounted: false })
+  }
+
+  componentWillReceiveProps(nxtProps) {
+    let simNodes = this.simulation.nodes()
+    this.simulation.nodes(
+      nxtProps.nodes.map((node, i) => {
+        let existingNode = simNodes[i] || {}
+        return { ...existingNode, ...node }
+      })
+    )
+  }
+
+  ticked = () => {
+    if (this.state.isMounted) {
+      this.setState({ nodes: this.simulation.nodes() })
+    }
+  }
+
+  render() {
+    const { height, width, addSelectedTag, removeSelectedTag } = this.props
+    const { nodes } = this.state
+    return (
+      <Canvas {...{ height, width }}>
+        {nodes.map((d) => {
+          return <SVGTag {...{ ...d, key: d.index, addSelectedTag, removeSelectedTag }} />
+        })}
+      </Canvas>
+    )
+  }
+}
+
+const TagsContainerView = ({
+  tags,
+  selectedTags,
+  selectedTagCount,
+  addSelectedTag, // fn
+  removeSelectedTag, // fn
+  clearSelectedTags, // fn
+}) => {
+  return (
+    <TagsContainer>
+      <ForceSimulation
+        height={250}
+        width={window.innerWidth}
+        addSelectedTag={addSelectedTag}
+        removeSelectedTag={removeSelectedTag}
+        nodes={Object.keys(tags).map((name) => ({
+          name,
+          selected: tags[name],
+          radius: 25,
+        }))}
+      />
     </TagsContainer>
   )
 }
