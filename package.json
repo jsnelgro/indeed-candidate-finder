@@ -23,7 +23,7 @@
     "redux-devtools-extension": "^2.13.2"
   },
   "dependencies": {
-    "jhs-hors": "gist:3f42b8fbbfc2b43528c6e66674b8caef",
+    "jhs-utils": "gist:4ed713781f8ecbaabf790b344a6de2c9",
     "lodash.filter": "^4.6.0",
     "lodash.intersection": "^4.4.0",
     "lodash.samplesize": "^4.2.0",

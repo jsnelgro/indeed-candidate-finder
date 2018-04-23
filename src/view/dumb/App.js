@@ -8,15 +8,15 @@ export const baseStyles = () => injectGlobal`
 `
 
 const AppLayout = styled.div`
+  max-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
+  width: 100%;
   & > div:first-child {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 33vh;
-    width: 100%;
+    height: 33%;
   }
   & > div:nth-child(2) {
-    margin-top: 33vh;
+    height: calc(100% - 33%);
   }
 `
 

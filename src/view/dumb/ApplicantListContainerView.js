@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Avatar } from 'rebass'
+import { Col, Row, raised, borderRadius, verticalScroll } from './common/'
 import upperfirst from 'lodash.upperfirst'
 
 const capitalize = (name) => {
@@ -10,25 +11,42 @@ const capitalize = (name) => {
     .join(' ')
 }
 
+const ListContainer = styled.div`
+  ${verticalScroll};
+  padding: 20px;
+`
+
 const Card = styled.div`
+  ${raised};
+  ${borderRadius};
   display: flex;
+  flex-direction: row;
   align-items: center;
-  width: 85%;
-  height: 100%;
-  box-shadow: 0 3px 5px 2px hsla(0, 0%, 0%, 0.25);
-  margin: 2%;
-  img {
-    margin: 5%;
+  width: 100%;
+  height: 100px;
+  margin: 15px 0;
+  & > div:first-child {
+    align-items: center;
+    flex: 0 0 33%;
+    display: flex;
+    h1 {
+      color: green;
+    }
+    img {
+      margin: 5%;
+    }
+  }
+
+  & > div:last-child {
+    flex-flow: row wrap;
+    display: flex;
+    background: indianred;
   }
 `
 
-const ListContainer = styled.div`
-  width: 100%;
-  max-width: 640px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+const Chip = styled.div`
+  ${raised};
+  ${borderRadius};
 `
 
 const ApplicantListContainerView = ({ applicants }) => {
@@ -37,8 +55,14 @@ const ApplicantListContainerView = ({ applicants }) => {
       {applicants.map((a) => {
         return (
           <Card key={a.email}>
-            <Avatar size={'25%'} src={a.picture.large} />
-            <h1>{capitalize(`${a.name.first} ${a.name.last}`)}</h1>
+            <Col>
+              <Avatar src={a.picture.large} />
+              <h1>{capitalize(a.name.first)}</h1>
+              <h1>{capitalize(a.name.last)}</h1>
+            </Col>
+            <Col>
+              <Row>{a.tags.map((t) => <Chip key={t}>{t}</Chip>)}</Row>
+            </Col>
           </Card>
         )
       })}
