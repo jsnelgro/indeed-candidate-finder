@@ -64,7 +64,10 @@ const Card = styled.div`
   }
 `
 
-const ApplicantListContainerView = ({ applicants }) => {
+const ApplicantListContainerView = ({ applicants, loadingStatus }) => {
+  if (loadingStatus !== 'SUCCESS') {
+    return <ListContainer>{capitalize(loadingStatus.toLowerCase())}</ListContainer>
+  }
   return (
     <ListContainer>
       {applicants.map((a) => {

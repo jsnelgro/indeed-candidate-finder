@@ -10,6 +10,7 @@ export const selectedTags = createSelector(tags, (tags) =>
 )
 
 export const applicants = (state) => state.applicants.data
+export const applicantsLoadingStatus = (state) => state.applicants.status
 
 export const filteredApplicants = createSelector(
   selectedTags,

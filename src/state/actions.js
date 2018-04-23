@@ -29,7 +29,7 @@ export function loadTags() {
     try {
       // const REQ_URL = 'http://api.dataatwork.org/v1/skills?offset=600&limit=200'
       // let res = await fetch(REQ_URL).then((r) => r.json())
-      let res = skills
+      let res = sampleSize(skills, 75)
       dispatch(setTags(res.reduce((acc, job) => ({ ...acc, [job]: false }), {})))
       dispatch(setTagsRequestStatus('SUCCESS'))
     } catch (e) {
@@ -43,7 +43,7 @@ export function loadApplicants() {
     let state = getState()
     dispatch(setApplicantsRequestStatus('LOADING'))
     try {
-      const REQ_URL = 'https://randomuser.me/api/?results=50'
+      const REQ_URL = 'https://randomuser.me/api/?results=200'
       let res = await fetch(REQ_URL).then((r) => r.json())
 
       // roll up results array into a hash and add some random tags
