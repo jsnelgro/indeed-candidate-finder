@@ -6,8 +6,7 @@
   "scripts": {
     "start": "parcel src/index.html",
     "test": "jest",
-    "publish":
-      "parcel build src/index.html && surge ./dist https://indeed-candidate-finder.surge.sh"
+    "publish": "parcel build src/index.html && surge ./dist https://indeed-candidate-finder.surge.sh"
   },
   "keywords": [],
   "author": "John Snelgrove <johnny.snelgrove@gmail.com> (http://jsnelgro.me)",
@@ -26,17 +25,12 @@
     "redux-devtools-extension": "^2.13.2"
   },
   "dependencies": {
-    "d3-force": "^1.1.0",
-    "jhs-utils": "gist:4ed713781f8ecbaabf790b344a6de2c9",
-    "lodash.filter": "^4.6.0",
     "lodash.intersection": "^4.4.0",
     "lodash.samplesize": "^4.2.0",
-    "lodash.throttle": "^4.1.1",
     "lodash.upperfirst": "^4.3.1",
     "react": "^15.6.2",
     "react-dom": "^15.6.2",
     "react-redux": "^5.0.7",
-    "rebass": "^2.0.0-0",
     "redux": "^4.0.0",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1",
