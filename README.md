@@ -18,3 +18,9 @@ Open [localhost:1234](localhost:1234) in a browser.
 ```bash
 npm test
 ```
+
+## Publishing
+
+```bash
+npm run publish
+```

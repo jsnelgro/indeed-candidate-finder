@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "parcel src/index.html",
-    "test": "jest"
+    "test": "jest",
+    "publish":
+      "parcel build src/index.html && surge ./dist https://indeed-candidate-finder.surge.sh"
   },
   "keywords": [],
   "author": "John Snelgrove <johnny.snelgrove@gmail.com> (http://jsnelgro.me)",
