@@ -16,7 +16,7 @@ const TagsContainer = styled.div`
   ${raised};
   ${verticalScroll};
   background: white;
-  border: 25px solid white;
+  border-bottom: 20px solid white;
   padding: 20px 0;
   & > div {
     ${flexWrap};
@@ -40,8 +40,6 @@ const ClearTagsBtn = styled.div`
   font-size: 13px;
   cursor: pointer;
   background: white;
-  &:hover {
-  }
 `
 
 const TopRow = styled(Row)`
@@ -68,7 +66,7 @@ const TagsGrid = ({ tags, clearSelectedTags, selectedTagCount, toggleSelected })
     <Col m={'10px'}>
       <TopRow>
         <h1>Candidate Finder 4000</h1>
-        <ClearTagsBtn onClick={clearSelectedTags}>Reset</ClearTagsBtn>
+        <ClearTagsBtn onClick={clearSelectedTags}>Reset {selectedTagCount}</ClearTagsBtn>
       </TopRow>
       <TagsRow>
         {Object.keys(tags).map((k, i) => {
