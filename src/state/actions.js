@@ -1,5 +1,6 @@
 import sampleSize from 'lodash.samplesize'
 import { tags as getTags } from './selectors'
+import skills from './skills.json'
 export const SET_ASYNC_REQUEST_STATUS = 'SET_ASYNC_REQUEST_STATUS'
 export const NOOP = '__NOOP__'
 
@@ -26,10 +27,10 @@ export function loadTags() {
   return async (dispatch) => {
     dispatch(setTagsRequestStatus('LOADING'))
     try {
-      const REQ_URL =
-        'http://api.dataatwork.org/v1/jobs/unusual_titles?offset=20&limit=200'
-      let res = await fetch(REQ_URL).then((r) => r.json())
-      dispatch(setTags(res.reduce((acc, job) => ({ ...acc, [job.title]: false }), {})))
+      // const REQ_URL = 'http://api.dataatwork.org/v1/skills?offset=600&limit=200'
+      // let res = await fetch(REQ_URL).then((r) => r.json())
+      let res = skills
+      dispatch(setTags(res.reduce((acc, job) => ({ ...acc, [job]: false }), {})))
       dispatch(setTagsRequestStatus('SUCCESS'))
     } catch (e) {
       dispatch(setTagsRequestStatus(e.message))
